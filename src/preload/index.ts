@@ -90,6 +90,56 @@ const hermesAPI = {
   ): Promise<boolean> =>
     ipcRenderer.invoke("set-model-config", provider, model, baseUrl, profile),
 
+  getModelConfigStatus: (
+    profile?: string,
+  ): Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }> => ipcRenderer.invoke("model-config:get", profile),
+
+  applyLicenseModelConfig: (
+    profile?: string,
+  ): Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }> => ipcRenderer.invoke("model-config:apply", profile),
+
+  resetLicenseModelConfig: (
+    profile?: string,
+  ): Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }> => ipcRenderer.invoke("model-config:reset", profile),
+
+  testModelProxy: (options?: { model?: string; autoSelectModel?: boolean }): Promise<{
+    ok: boolean;
+    status?: string;
+    message?: string;
+    model?: string;
+    response_preview?: string;
+  }> => ipcRenderer.invoke("model-proxy:test", options),
+
   // Connection mode (local / remote / ssh)
   isRemoteMode: (): Promise<boolean> => ipcRenderer.invoke("is-remote-mode"),
   isRemoteOnlyMode: (): Promise<boolean> => ipcRenderer.invoke("is-remote-only-mode"),
@@ -670,6 +720,53 @@ const hermesAPI = {
     lines?: number,
   ): Promise<{ content: string; path: string }> =>
     ipcRenderer.invoke("read-logs", logFile, lines),
+
+  // License
+  getLicense: (): Promise<{
+    license_key: string;
+    vps_base_url: string;
+    device_id: string;
+    created_at: string;
+    updated_at: string;
+    status: string;
+  } | null> => ipcRenderer.invoke("license:get"),
+
+  saveLicense: (input: {
+    license_key: string;
+    vps_base_url: string;
+  }): Promise<{
+    license_key: string;
+    vps_base_url: string;
+    device_id: string;
+    created_at: string;
+    updated_at: string;
+    status: string;
+  }> => ipcRenderer.invoke("license:save", input),
+
+  clearLicense: (): Promise<{ success: boolean }> =>
+    ipcRenderer.invoke("license:clear"),
+
+  testLicense: (): Promise<{
+    ok: boolean;
+    status?: string;
+    message?: string;
+  }> => ipcRenderer.invoke("license:test"),
+
+  // Quota / Billing
+  getQuota: (): Promise<{
+    ok: boolean;
+    quota?: {
+      total_tokens: number;
+      used_tokens: number;
+      remaining_tokens: number;
+      reset_at?: string | null;
+      renew_url?: string | null;
+      plan?: string | null;
+      status?: string;
+    };
+    status?: string;
+    message?: string;
+  }> => ipcRenderer.invoke("quota:get"),
 };
 
 if (process.contextIsolated) {

@@ -1,0 +1,15 @@
+export default {
+  title: "额度 / 账单",
+  overview: "额度概览",
+  description: "读取 data/license.json，并向 VPS /api/quota 接口请求当前 token 额度。",
+  tokenQuota: "Token 额度",
+  remaining: "剩余额度",
+  usedOfTotal: "已用 {{used}} / 总计 {{total}}",
+  details: "详情",
+  plan: "套餐",
+  status: "状态",
+  resetAt: "重置时间",
+  renew: "续费 / 充值",
+  unavailable: "额度不可用",
+  fetchFailed: "获取额度失败",
+} as const;

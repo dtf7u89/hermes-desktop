@@ -195,9 +195,9 @@ describe("IPC channel consistency", () => {
     const invokeChannels = [...preloadSrc.matchAll(/ipcRenderer\.invoke\(\s*["']([^"']+)["']/g)]
       .map((m) => m[1]);
     expect(invokeChannels.length).toBeGreaterThan(30);
-    // Every channel should be kebab-case
+    // Channels are usually kebab-case; Round3+ commercial APIs use namespace:action.
     for (const ch of invokeChannels) {
-      expect(ch).toMatch(/^[a-z][a-z0-9-]*$/);
+      expect(ch).toMatch(/^[a-z][a-z0-9-]*(?::[a-z][a-z0-9-]*)?$/);
     }
   });
 

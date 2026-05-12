@@ -16,6 +16,16 @@ interface InstallProgress {
   log: string;
 }
 
+interface QuotaInfo {
+  total_tokens: number;
+  used_tokens: number;
+  remaining_tokens: number;
+  reset_at?: string | null;
+  renew_url?: string | null;
+  plan?: string | null;
+  status?: string;
+}
+
 interface HermesAPI {
   // Installation
   checkInstall: () => Promise<InstallStatus>;
@@ -53,6 +63,56 @@ interface HermesAPI {
     baseUrl: string,
     profile?: string,
   ) => Promise<boolean>;
+
+  getModelConfigStatus: (
+    profile?: string,
+  ) => Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }>;
+
+  applyLicenseModelConfig: (
+    profile?: string,
+  ) => Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }>;
+
+  resetLicenseModelConfig: (
+    profile?: string,
+  ) => Promise<{
+    ok: boolean;
+    status?: {
+      configured: boolean;
+      base_url?: string;
+      api_key_masked?: string;
+      source?: "license" | "manual" | "unknown";
+      message?: string;
+    };
+    message?: string;
+  }>;
+
+  testModelProxy: (options?: { model?: string; autoSelectModel?: boolean }) => Promise<{
+    ok: boolean;
+    status?: string;
+    message?: string;
+    model?: string;
+    response_preview?: string;
+  }>;
 
   // Connection mode (local / remote / ssh)
   isRemoteMode: () => Promise<boolean>;
@@ -457,6 +517,39 @@ interface HermesAPI {
     logFile?: string,
     lines?: number,
   ) => Promise<{ content: string; path: string }>;
+
+  // License
+  getLicense: () => Promise<{
+    license_key: string;
+    vps_base_url: string;
+    device_id: string;
+    created_at: string;
+    updated_at: string;
+    status: string;
+  } | null>;
+  saveLicense: (input: {
+    license_key: string;
+    vps_base_url: string;
+  }) => Promise<{
+    license_key: string;
+    vps_base_url: string;
+    device_id: string;
+    created_at: string;
+    updated_at: string;
+    status: string;
+  }>;
+  clearLicense: () => Promise<{ success: boolean }>;
+  testLicense: () => Promise<{
+    ok: boolean;
+    status?: string;
+    message?: string;
+  }>;
+  getQuota: () => Promise<{
+    ok: boolean;
+    quota?: QuotaInfo;
+    status?: string;
+    message?: string;
+  }>;
 }
 
 declare global {

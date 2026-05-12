@@ -1,0 +1,15 @@
+export default {
+  title: "Facturación y cuota",
+  overview: "Resumen de cuota",
+  description: "Lee data/license.json y solicita la cuota actual de tokens al endpoint VPS /api/quota.",
+  tokenQuota: "Cuota de tokens",
+  remaining: "Tokens restantes",
+  usedOfTotal: "{{used}} usados de {{total}} en total",
+  details: "Detalles",
+  plan: "Plan",
+  status: "Estado",
+  resetAt: "Restablece en",
+  renew: "Renovar / Recargar",
+  unavailable: "Cuota no disponible",
+  fetchFailed: "Error al obtener la cuota",
+} as const;

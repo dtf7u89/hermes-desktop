@@ -14,6 +14,7 @@ import {
 import { getModelConfig, readEnv, getConnectionConfig } from "./config";
 import { getSshTunnelUrl, isSshTunnelActive, isSshTunnelHealthy, startSshTunnel } from "./ssh-tunnel";
 import { stripAnsi } from "./utils";
+import { getPortableHermesEnv } from "./portable-paths";
 
 const LOCAL_API_URL = "http://127.0.0.1:8642";
 
@@ -461,10 +462,9 @@ function sendMessageViaCli(
   }
 
   const env: Record<string, string> = {
-    ...(process.env as Record<string, string>),
+    ...(getPortableHermesEnv(process.env as Record<string, string>, { profile: profile || "portable" }) as Record<string, string>),
     PATH: getEnhancedPath(),
     HOME: homedir(),
-    HERMES_HOME: HERMES_HOME,
     PYTHONUNBUFFERED: "1",
   };
 
@@ -694,10 +694,9 @@ export function startGateway(profile?: string): boolean {
 
   // Build gateway env with profile API keys
   const gatewayEnv: Record<string, string> = {
-    ...(process.env as Record<string, string>),
+    ...(getPortableHermesEnv(process.env as Record<string, string>, { profile: profile || "portable" }) as Record<string, string>),
     PATH: getEnhancedPath(),
     HOME: homedir(),
-    HERMES_HOME: HERMES_HOME,
     API_SERVER_ENABLED: "true", // Ensure API server starts with gateway
   };
 

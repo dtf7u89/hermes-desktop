@@ -8,6 +8,8 @@ import Soul from "../Soul/Soul";
 import Memory from "../Memory/Memory";
 import Tools from "../Tools/Tools";
 import Gateway from "../Gateway/Gateway";
+import License from "../License/License";
+import Billing from "../Billing/Billing";
 import Office from "../Office/Office";
 import Models from "../Models/Models";
 import Providers from "../Providers/Providers";
@@ -27,8 +29,10 @@ import {
   Building,
   Layers,
   KeyRound,
+  CreditCard,
   Timer,
   Download,
+  Globe,
 } from "../../assets/icons";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "../../components/useI18n";
@@ -46,7 +50,9 @@ type View =
   | "tools"
   | "schedules"
   | "gateway"
-  | "settings";
+  | "settings"
+  | "license"
+  | "billing";
 
 const NAV_ITEMS: { view: View; icon: LucideIcon; labelKey: string }[] = [
   { view: "chat", icon: ChatBubble, labelKey: "navigation.chat" },
@@ -61,6 +67,8 @@ const NAV_ITEMS: { view: View; icon: LucideIcon; labelKey: string }[] = [
   { view: "tools", icon: Wrench, labelKey: "navigation.tools" },
   { view: "schedules", icon: Timer, labelKey: "navigation.schedules" },
   { view: "gateway", icon: Signal, labelKey: "navigation.gateway" },
+  { view: "license", icon: Globe, labelKey: "navigation.license" },
+  { view: "billing", icon: CreditCard, labelKey: "navigation.billing" },
   { view: "settings", icon: SettingsIcon, labelKey: "navigation.settings" },
 ];
 
@@ -311,6 +319,26 @@ function Layout(): React.JSX.Element {
           }}
         >
           <Settings profile={activeProfile} />
+        </div>
+        <div
+          style={{
+            display: view === "license" ? "flex" : "none",
+            flex: 1,
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
+          <License />
+        </div>
+        <div
+          style={{
+            display: view === "billing" ? "flex" : "none",
+            flex: 1,
+            flexDirection: "column",
+            overflow: "hidden",
+          }}
+        >
+          <Billing />
         </div>
       </main>
     </div>

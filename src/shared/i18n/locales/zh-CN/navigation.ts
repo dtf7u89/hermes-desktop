@@ -12,4 +12,6 @@ export default {
   schedules: "计划任务",
   gateway: "网关",
   settings: "设置",
+  license: "授权",
+  billing: "额度",
 } as const;

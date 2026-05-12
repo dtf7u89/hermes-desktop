@@ -118,6 +118,21 @@ import {
 } from "./cronjobs";
 import { getAppLocale, setAppLocale } from "./locale";
 import type { AppLocale } from "../shared/i18n/types";
+import { ensurePortableDirs } from "./portable-paths";
+import {
+  readLicense,
+  saveLicense,
+  clearLicense,
+  testLicenseConnection,
+  validateLicenseInput,
+} from "./license";
+import { fetchQuota } from "./quota";
+import {
+  getModelConfigStatus,
+  applyLicenseModelConfig,
+  resetLicenseModelConfig,
+} from "./model-config";
+import { testModelProxy, type ModelProxyTestOptions } from "./model-proxy-test";
 import {
   sshListInstalledSkills,
   sshGetSkillContent,
@@ -826,6 +841,41 @@ function setupIPC(): void {
       updateModel(id, fields),
   );
 
+  // License
+  ipcMain.handle("license:get", async () => readLicense());
+
+  ipcMain.handle("license:save", async (_event, input: { license_key: string; vps_base_url: string }) => {
+    const err = validateLicenseInput(input);
+    if (err) throw new Error(err);
+    return saveLicense(input);
+  });
+
+  ipcMain.handle("license:clear", async () => {
+    clearLicense();
+    return { success: true };
+  });
+
+  ipcMain.handle("license:test", async () => testLicenseConnection());
+
+  // Model Config (commercial license → VPS proxy)
+  ipcMain.handle("model-config:get", async (_event, profile?: string) =>
+    getModelConfigStatus(profile),
+  );
+  ipcMain.handle("model-config:apply", async (_event, profile?: string) =>
+    applyLicenseModelConfig(profile),
+  );
+  ipcMain.handle("model-config:reset", async (_event, profile?: string) =>
+    resetLicenseModelConfig(profile),
+  );
+
+  // Model Proxy Test
+  ipcMain.handle("model-proxy:test", async (_event, options?: ModelProxyTestOptions) =>
+    testModelProxy(options),
+  );
+
+  // Quota / Billing
+  ipcMain.handle("quota:get", async () => fetchQuota());
+
   // Claw3D
   ipcMain.handle("claw3d-status", () => getClaw3dStatus());
 
@@ -1114,6 +1164,13 @@ function setupUpdater(): void {
 }
 
 app.whenReady().then(() => {
+  // Initialize portable data directories (data/hermes, data/workspace, data/logs)
+  try {
+    ensurePortableDirs();
+  } catch (err) {
+    console.error("[MAIN] Failed to initialize portable directories:", err);
+  }
+
   app.name = "Hermes";
   electronApp.setAppUserModelId("com.nousresearch.hermes");
 

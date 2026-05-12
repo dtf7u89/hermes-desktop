@@ -209,31 +209,35 @@ describe("Hermes auth credential discovery", () => {
   ): Promise<typeof import("../src/main/installer")> {
     vi.resetModules();
     process.env.HERMES_HOME = home;
+    process.env.HERMES_DESKTOP_DATA_DIR = home;
     return await import("../src/main/installer");
   }
 
   afterEach(() => {
     delete process.env.HERMES_HOME;
+    delete process.env.HERMES_DESKTOP_DATA_DIR;
     vi.resetModules();
   });
 
   it("detects OAuth credentials stored in auth.json credential_pool", async () => {
+    mkdirSync(join(TEST_DIR, "hermes"), { recursive: true });
     writeFileSync(
-      join(TEST_DIR, "auth.json"),
+      join(TEST_DIR, "hermes", "auth.json"),
       JSON.stringify({ credential_pool: { "openai-codex": [{ id: "acct" }] } }),
     );
 
     const { HERMES_AUTH_FILE, hasHermesAuthCredential } =
       await importInstallerWithHome(TEST_DIR);
 
-    expect(HERMES_AUTH_FILE).toBe(join(TEST_DIR, "auth.json"));
+    expect(HERMES_AUTH_FILE).toBe(join(TEST_DIR, "hermes", "auth.json"));
     expect(hasHermesAuthCredential("openai-codex")).toBe(true);
     expect(hasHermesAuthCredential("anthropic")).toBe(false);
   });
 
   it("accepts active_provider and providers entries as configured credentials", async () => {
+    mkdirSync(join(TEST_DIR, "hermes"), { recursive: true });
     writeFileSync(
-      join(TEST_DIR, "auth.json"),
+      join(TEST_DIR, "hermes", "auth.json"),
       JSON.stringify({
         active_provider: "openrouter",
         providers: { anthropic: {} },

@@ -1,0 +1,15 @@
+export default {
+  title: "Billing & Quota",
+  overview: "Quota Overview",
+  description: "Reads data/license.json and requests the current token quota from the VPS /api/quota endpoint.",
+  tokenQuota: "Token Quota",
+  remaining: "Remaining tokens",
+  usedOfTotal: "{{used}} used of {{total}} total",
+  details: "Details",
+  plan: "Plan",
+  status: "Status",
+  resetAt: "Reset at",
+  renew: "Renew / Top up",
+  unavailable: "Quota unavailable",
+  fetchFailed: "Failed to fetch quota",
+} as const;

@@ -6,6 +6,7 @@ export {
   ChevronDown,
   Clock,
   Copy,
+  CreditCard,
   Download,
   ExternalLink,
   KeyRound,

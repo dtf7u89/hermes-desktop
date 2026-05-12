@@ -1,0 +1,15 @@
+export default {
+  title: "Cobrança e cota",
+  overview: "Visão geral da cota",
+  description: "Lê data/license.json e solicita a cota atual de tokens ao endpoint VPS /api/quota.",
+  tokenQuota: "Cota de tokens",
+  remaining: "Tokens restantes",
+  usedOfTotal: "{{used}} usados de {{total}} no total",
+  details: "Detalhes",
+  plan: "Plano",
+  status: "Status",
+  resetAt: "Redefine em",
+  renew: "Renovar / Recarregar",
+  unavailable: "Cota indisponível",
+  fetchFailed: "Falha ao buscar cota",
+} as const;

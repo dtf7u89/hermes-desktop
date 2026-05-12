@@ -12,4 +12,6 @@ export default {
   schedules: "Agendamentos",
   gateway: "Gateway",
   settings: "Configurações",
+  license: "Licença",
+  billing: "Cobrança",
 } as const;

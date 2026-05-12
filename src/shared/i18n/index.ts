@@ -26,6 +26,10 @@ import soulEn from "./locales/en/soul";
 import memoryEn from "./locales/en/memory";
 import installEn from "./locales/en/install";
 import constantsEn from "./locales/en/constants";
+import licenseEn from "./locales/en/license";
+import billingEn from "./locales/en/billing";
+import modelConfigEn from "./locales/en/model-config";
+import modelProxyEn from "./locales/en/model-proxy";
 import commonEs from "./locales/es/common";
 import navigationEs from "./locales/es/navigation";
 import welcomeEs from "./locales/es/welcome";
@@ -46,6 +50,10 @@ import soulEs from "./locales/es/soul";
 import memoryEs from "./locales/es/memory";
 import installEs from "./locales/es/install";
 import constantsEs from "./locales/es/constants";
+import licenseEs from "./locales/es/license";
+import billingEs from "./locales/es/billing";
+import modelConfigEs from "./locales/es/model-config";
+import modelProxyEs from "./locales/es/model-proxy";
 import commonZh from "./locales/zh-CN/common";
 import navigationZh from "./locales/zh-CN/navigation";
 import welcomeZh from "./locales/zh-CN/welcome";
@@ -66,6 +74,10 @@ import soulZh from "./locales/zh-CN/soul";
 import memoryZh from "./locales/zh-CN/memory";
 import installZh from "./locales/zh-CN/install";
 import constantsZh from "./locales/zh-CN/constants";
+import licenseZh from "./locales/zh-CN/license";
+import billingZh from "./locales/zh-CN/billing";
+import modelConfigZh from "./locales/zh-CN/model-config";
+import modelProxyZh from "./locales/zh-CN/model-proxy";
 import commonPt from "./locales/pt-BR/common";
 import navigationPt from "./locales/pt-BR/navigation";
 import welcomePt from "./locales/pt-BR/welcome";
@@ -86,6 +98,10 @@ import soulPt from "./locales/pt-BR/soul";
 import memoryPt from "./locales/pt-BR/memory";
 import installPt from "./locales/pt-BR/install";
 import constantsPt from "./locales/pt-BR/constants";
+import licensePt from "./locales/pt-BR/license";
+import billingPt from "./locales/pt-BR/billing";
+import modelConfigPt from "./locales/pt-BR/model-config";
+import modelProxyPt from "./locales/pt-BR/model-proxy";
 
 export const resources = {
   en: {
@@ -110,6 +126,10 @@ export const resources = {
       memory: memoryEn,
       install: installEn,
       constants: constantsEn,
+      license: licenseEn,
+      billing: billingEn,
+      modelConfig: modelConfigEn,
+      modelProxy: modelProxyEn,
     },
   },
   es: {
@@ -134,6 +154,10 @@ export const resources = {
       memory: memoryEs,
       install: installEs,
       constants: constantsEs,
+      license: licenseEs,
+      billing: billingEs,
+      modelConfig: modelConfigEs,
+      modelProxy: modelProxyEs,
     },
   },
   "zh-CN": {
@@ -158,6 +182,10 @@ export const resources = {
       memory: memoryZh,
       install: installZh,
       constants: constantsZh,
+      license: licenseZh,
+      billing: billingZh,
+      modelConfig: modelConfigZh,
+      modelProxy: modelProxyZh,
     },
   },
   "pt-BR": {
@@ -182,6 +210,10 @@ export const resources = {
       memory: memoryPt,
       install: installPt,
       constants: constantsPt,
+      license: licensePt,
+      billing: billingPt,
+      modelConfig: modelConfigPt,
+      modelProxy: modelProxyPt,
     },
   },
 } satisfies Resource;

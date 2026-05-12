@@ -13,6 +13,13 @@ asarUnpack:
   - resources/**
 win:
   executableName: hermes-agent
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -20,6 +27,8 @@ nsis:
   createDesktopShortcut: always
   oneClick: true
   perMachine: false
+portable:
+  artifactName: ${name}-${version}-portable.${ext}
 mac:
   icon: build/icon.icns
   entitlements: build/entitlements.mac.plist

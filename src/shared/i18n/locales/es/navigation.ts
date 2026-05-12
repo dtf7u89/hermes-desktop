@@ -12,4 +12,6 @@ export default {
   schedules: "Programaciones",
   gateway: "Gateway",
   settings: "Configuración",
+  license: "Licencia",
+  billing: "Facturación",
 } as const;

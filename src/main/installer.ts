@@ -6,9 +6,9 @@ import type { BrowserWindow } from "electron";
 import { getModelConfig, getConnectionConfig } from "./config";
 import { stripAnsi } from "./utils";
 import { setupAskpass, AskpassHandle } from "./askpass";
+import { getHermesHomeDir } from "./portable-paths";
 
-export const HERMES_HOME =
-  process.env.HERMES_HOME?.trim() || join(homedir(), ".hermes");
+export const HERMES_HOME = getHermesHomeDir();
 export const HERMES_REPO = join(HERMES_HOME, "hermes-agent");
 export const HERMES_VENV = join(HERMES_REPO, "venv");
 export const HERMES_PYTHON = join(HERMES_VENV, "bin", "python");
