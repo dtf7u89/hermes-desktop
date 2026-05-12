@@ -2,19 +2,17 @@
 
 <br/>
 <p align="center">
-  <a href="https://hermes-agent.nousresearch.com/docs/"><img src="https://img.shields.io/badge/Docs-hermes--agent.nousresearch.com-FFD700?style=for-the-badge" alt="Documentation"></a>
-  <a href="https://discord.gg/NousResearch"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord"></a>
-  <a href="https://github.com/fathah/hermes-desktop/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
-  <a href="https://github.com/fathah/hermes-desktop/releases/"><img src="https://img.shields.io/badge/Download-Releases-FF6600?style=for-the-badge" alt="Releases"></a>
-<a href="https://github.com/fathah/hermes-desktop/stargazers">
-  <img src="https://img.shields.io/github/stars/fathah/hermes-desktop?style=for-the-badge&color=FFD700&label=Stars" alt="Stars">
+  <a href="https://github.com/dtf7u89/hermes-desktop/releases/"><img src="https://img.shields.io/badge/Download-Releases-FF6600?style=for-the-badge" alt="Releases"></a>
+<a href="https://github.com/dtf7u89/hermes-desktop/stargazers">
+  <img src="https://img.shields.io/github/stars/dtf7u89/hermes-desktop?style=for-the-badge&color=FFD700&label=Stars" alt="Stars">
 </a>
-  <a href="https://github.com/fathah/hermes-desktop/releases/">
-  <img src="https://img.shields.io/github/downloads/fathah/hermes-desktop/total?style=for-the-badge&color=00B496&label=Total%20Downloads" alt="Downloads">
+  <a href="https://github.com/dtf7u89/hermes-desktop/releases/">
+  <img src="https://img.shields.io/github/downloads/dtf7u89/hermes-desktop/total?style=for-the-badge&color=00B496&label=Total%20Downloads" alt="Downloads">
 </a>
+  <a href="https://github.com/dtf7u89/hermes-desktop/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="License: MIT"></a>
 </p>
 
-> **This project is in active development.** Features may change, and some things might break. If you run into a problem or have an idea, [open an issue](https://github.com/fathah/hermes-desktop/issues). Contributions are welcome!
+> **This is a fork of [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop) with commercial features added — USB portable packaging, New API billing/quota, model proxy testing, and production license management.** This project is in active development. If you run into a problem or have an idea, [open an issue](https://github.com/dtf7u89/hermes-desktop/issues).
 
 ## Languages
 
@@ -23,11 +21,16 @@
 
 Hermes Desktop is a native desktop app for installing, configuring, and chatting with [Hermes Agent](https://github.com/NousResearch/hermes-agent) — a self-improving AI assistant with tool use, multi-platform messaging, and a closed learning loop.
 
-Instead of managing the CLI by hand, the app walks through install, provider setup, and day-to-day usage in one place. It uses the official Hermes install script, stores Hermes in `~/.hermes`, and gives you a GUI for chat, sessions, profiles, memory, skills, tools, scheduling, messaging gateways, and more.
+This fork adds **production-ready commercial features** on top of the open-source base:
+
+- **USB Portable packaging** — runs entirely from a USB drive with `data/` next to the executable, no installation required
+- **New API Billing / Quota** — real-time token usage tracking via New API's `/api/user/self` endpoint with Bearer authentication
+- **License management** — VPS URL + user token + device ID persistence in portable `data/license.json`
+- **Model Proxy Test** — configurable model testing against production New API endpoints
 
 ## Install
 
-Download the latest build from the [Releases](https://github.com/fathah/hermes-desktop/releases/) page.
+Download the latest build from the [Releases](https://github.com/dtf7u89/hermes-desktop/releases/) page.
 
 | Platform       | File                    |
 | -------------- | ----------------------- |
@@ -36,16 +39,13 @@ Download the latest build from the [Releases](https://github.com/fathah/hermes-d
 | Linux (Debian) | `.deb`                  |
 | Linux (Fedora) | `.rpm`                  |
 | Windows        | `.exe` (NSIS installer) |
+| Windows USB    | `.exe` (portable)       |
 
-### Windows (winget)
+### Windows USB Portable
 
-Once the manifest has been accepted into [`microsoft/winget-pkgs`](https://github.com/microsoft/winget-pkgs), you can install with:
+Download the `Hermes Agent-<version>-portable.exe` from Releases, place it in a USB drive directory (e.g. `HermesUSB/`), and double-click to launch. All data is stored in `data/` next to the executable — move the entire directory to a different drive and everything goes with you. See [USB_README.md](USB_README.md) for detailed setup instructions.
 
-```powershell
-winget install NousResearch.HermesDesktop
-```
-
-Until then, download the `.exe` from the Releases page.
+### Windows (NSIS installer)
 
 > **Windows users:** The installer is not code-signed. Windows SmartScreen will warn on first launch — click "More info" → "Run anyway".
 
@@ -66,6 +66,29 @@ sudo dnf install ./hermes-desktop-<version>.rpm
 > ```
 >
 > Or right-click the app → **Open** → click **Open** in the confirmation dialog.
+
+## Commercial Features (This Fork)
+
+These features have been added to the upstream `fathah/hermes-desktop` base:
+
+| Feature | Description |
+|---------|-------------|
+| **USB Portable Mode** | `data/` directory follows the executable — works from any drive letter |
+| **New API Billing** | Real-time quota display from `GET /api/user/self` with Bearer auth |
+| **License Page** | VPS URL + user token + device ID management |
+| **Model Proxy Test** | Configurable model testing with auto-discovery via `/v1/models` |
+| **Apply Model Config** | One-click Hermes config generation with `base_url` and `api_key` |
+| **Portable Data Dirs** | `data/hermes/`, `data/workspace/`, `data/logs/` — all portable |
+
+**Production architecture:**
+
+```
+Hermes Desktop (USB)
+  → https://apitokenhub.dpdns.org (New API on VPS)
+  → Model routing, billing, quota, user tokens
+```
+
+The desktop client stores only `vps_base_url`, `license_key` (New API user token), and `device_id` — no upstream API keys ever reach the client.
 
 ## Features
 
@@ -136,6 +159,8 @@ In local mode, chat requests go through `http://127.0.0.1:8642` with SSE streami
 | **Gateway**   | Configure and control messaging platform integrations                                 |
 | **Office**    | Claw3d visual interface setup and management                                          |
 | **Settings**  | Provider config, credential pools, backup/import, log viewer, network settings, theme |
+| **License**   | VPS URL, New API user token, and device ID configuration *(this fork)*               |
+| **Billing**   | Real-time token usage and quota display *(this fork)*                                 |
 
 ## Supported Providers
 
@@ -209,9 +234,10 @@ Platform packaging:
 
 ```bash
 npm run build:mac
-npm run build:win
+npm run build:win           # NSIS installer + portable
+npm run build:win:portable  # USB portable .exe only
 npm run build:linux
-npm run build:rpm    # Fedora/RHEL .rpm only
+npm run build:rpm           # Fedora/RHEL .rpm only
 ```
 
 ## First-Time Setup
@@ -255,6 +281,7 @@ Hermes files are managed in:
 
 ## Notes
 
+- This fork adds commercial features (USB portable, New API billing, license management) on top of the upstream [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop).
 - The desktop app depends on the upstream Hermes Agent project for agent behavior and tool execution.
 - The built-in installer runs the official Hermes install script with `--skip-setup`, then completes provider configuration in the GUI.
 - Local model providers do not require an API key, but the compatible server must already be running.
@@ -262,10 +289,9 @@ Hermes files are managed in:
 
 ## Contributing
 
-Contributions are welcome! Check out the [Contributing Guide](CONTRIBUTING.md) to get started. If you're not sure where to begin, take a look at the [open issues](https://github.com/NousResearch/hermes-desktop/issues). Found a bug or have a feature request? [File an issue](https://github.com/NousResearch/hermes-desktop/issues/new).
+Contributions are welcome! Check out the [Contributing Guide](CONTRIBUTING.md) to get started. If you're not sure where to begin, take a look at the [open issues](https://github.com/dtf7u89/hermes-desktop/issues). Found a bug or have a feature request? [File an issue](https://github.com/dtf7u89/hermes-desktop/issues/new).
 
-## Related Project
+## Related Projects
 
-For the core agent, docs, and CLI workflows, see the main Hermes Agent repository:
-
-- https://github.com/NousResearch/hermes-agent
+- Upstream desktop app: [fathah/hermes-desktop](https://github.com/fathah/hermes-desktop)
+- Core agent and CLI: [NousResearch/hermes-agent](https://github.com/NousResearch/hermes-agent)

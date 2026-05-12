@@ -1,10 +1,10 @@
 {
   "name": "hermes-desktop",
   "version": "0.3.5",
-  "description": "Hermes Agent Desktop — self-improving AI assistant",
+  "description": "Hermes Agent Desktop — USB portable AI assistant with New API billing, model proxy, and commercial license management (fork of fathah/hermes-desktop)",
   "main": "./out/main/index.js",
-  "author": "fathah",
-  "homepage": "https://github.com/fathah/hermes-desktop",
+  "author": "dtf7u89",
+  "homepage": "https://github.com/dtf7u89/hermes-desktop",
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint --cache .",
@@ -67,5 +67,9 @@
     "typescript": "^5.9.3",
     "vite": "^7.2.6",
     "vitest": "^4.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dtf7u89/hermes-desktop.git"
   }
 }
